@@ -9,6 +9,7 @@ import java.time.Duration;
 import java.util.concurrent.TimeUnit;
 
 import org.apache.log4j.Logger;
+import org.apache.log4j.xml.DOMConfigurator;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
@@ -20,9 +21,10 @@ import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 
-
 public class StepDefinationFile {
-	private static Logger Log=Logger.getLogger(Log.class.getName());
+public static Logger Log = Logger.getLogger(StepDefinationFile.class.getName());
+
+	
 
 	WebDriver driver;
 	//String Expected =driver.getTitle();
@@ -30,15 +32,18 @@ public class StepDefinationFile {
 
 	@Given("the user navigates to the login page")
 	public void the_user_navigates_to_the_login_page() {
+DOMConfigurator.configure("log4j2.xml");
 		driver=new ChromeDriver();
 		driver.get("https://educonnectindia.com/Studentlogin");
 		Log.info("application is open");
-	 
+	    
 	
 	}
 
 	@When("the user enters {string} and {string}")
 	public void the_user_enters_and(String username, String password) throws InterruptedException {
+		DOMConfigurator.configure("log4j.xml");
+
 		Thread.sleep(3000);
 		driver.findElement(By.xpath("//input[@type='email']")).sendKeys(username);
 		Thread.sleep(2000);
@@ -49,6 +54,7 @@ public class StepDefinationFile {
 
 	@When("User click on login button")
 	public void user_click_on_login_button() throws InterruptedException {
+		DOMConfigurator.configure("log4j2.xml");
 		Thread.sleep(2000);
 		driver.findElement(By.xpath("//*[text()='Login']")).click();
 		System.out.println(driver.getTitle());
@@ -58,18 +64,16 @@ public class StepDefinationFile {
 
 	@When("Verify the Title of the page")
 	public void verify_the_title_of_the_page() {
+		   DOMConfigurator.configure("log4j2.xml");
 		   if(driver.getTitle().equals("Student Login - Educonnect")) {
 			   System.out.println("Title matched+  Testcase is pass");
 		   }
 		   else {
 			   System.out.println(driver.getTitle());
 			   System.out.println("Title not matched+   Testcase is fail");
-Log.info("Title not matched+   Testcase is fail");
+               Log.info("Title not matched+   Testcase is fail");
 
-		   }
-
-	   
-		
+		   }		
 	}
 
 	@Then("the user should be logged in successfully and redirected to the dashboard")
@@ -175,7 +179,9 @@ Log.info("Title not matched+   Testcase is fail");
 	Thread.sleep(2000);
 	driver.findElement(By.xpath("//*[@id=\"lastname\"]")).sendKeys(lastname);
 	Thread.sleep(2000);
-  driver.findElement(By.xpath("//*[@id=\"phone\"]")).sendKeys("7678989000");
+    driver.findElement(By.xpath("//*[@id=\"phone\"]")).sendKeys("7678989000");
+    
+  
 	
 	}
 
@@ -185,7 +191,8 @@ Log.info("Title not matched+   Testcase is fail");
 		driver.findElement(By.xpath("//*[@id=\"email\"]")).sendKeys(email);
 		Thread.sleep(2000);
 		driver.findElement(By.xpath("//*[@id=\"message\"]")).sendKeys(message);
-
+		
+       
 	
 	}
 
@@ -196,12 +203,13 @@ Log.info("Title not matched+   Testcase is fail");
   Thread.sleep(3000);
   Log.info( "Form subbimitted successfully.");
   driver.close();
+  
 	
 	}
-
-
+	
+	
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-	///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	
 	@When("Enter Firstname")
 	public void enter_firstname() throws InterruptedException {
@@ -209,7 +217,7 @@ Log.info("Title not matched+   Testcase is fail");
 		Thread.sleep(2000);
 	   driver.findElement(By.xpath("//*[@id=\"name\"]")).sendKeys("testing");
 	}
-
+    
 	@When("Enter Contact Number")
 	public void enter_contact_number() throws InterruptedException {
 	    driver.findElement(By.xpath("//*[@id=\"phone\"]")).sendKeys("7890000000");
@@ -250,9 +258,7 @@ Log.info("Title not matched+   Testcase is fail");
         // Wait for the file to upload (you can adjust this depending on the page's behavior)
         driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
         Thread.sleep(4000);
-        //.close();
-
-		
+        //.close();	
 	}
 
 
@@ -264,26 +270,17 @@ public void click_on_career_link() throws InterruptedException {
 
 }
 
+
 @When("Click on submit button")
 public void click_on_submit_button() {
           //driver.findElement(By.xpath("//*[@id=\"root\"]/div[2]/div[2]/div/form/div[6]/button")).click();
 	      driver.findElement(By.xpath("//*[@id=\"root\"]/div[2]/div[2]/div/form/div[6]/butto")).click();
 
 }
-
-
-
 @Then("Close application3")
 public void close_application3() {
 driver.close();
 
+
 }
-
-
-
-
-
-
-
-
 }
